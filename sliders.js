@@ -76,41 +76,26 @@ function updateSliderForLeft(sliderNumber)
   else if(sliderNumber == 5)
   	rollingSlides = rollingSlidesForSlider5; 
    
-  let slideToUpdate = rollingSlides[rollingSlides.length-1]; 
-  slideToUpdate.style.visibility = "hidden";
-  slideToUpdate.style.transition = "transform 0s";
-
-  setTimeout(function(){
-    let rollingSlides = [];
-    if(sliderNumber == 2)
-      rollingSlides = rollingSlidesForSlider2;
-    else if(sliderNumber == 3)
-      rollingSlides = rollingSlidesForSlider3; 
-    else if(sliderNumber == 5)
-      rollingSlides = rollingSlidesForSlider5; 
-
-    let slides = document.querySelectorAll('.slide-' + sliderNumber);
-    let lastElemPos = 0;
-    let totalWidth = (slides[0].offsetWidth) * slides.length;
-    let slideToUpdate = rollingSlides[rollingSlides.length-1];  
-    
-    if(slideToUpdate != slides[slides.length-1])    	  	
-      lastElemPos = parseInt(rollingSlides[0].style.transform.split("px")[0].split("(")[1]);
-      
-    rollingSlides.pop();
-    rollingSlides.unshift(slideToUpdate);
-    
-    if(slideToUpdate == slides[slides.length-1])
-    {      
-      slideToUpdate.style.transform = "translateX(" + (-1*(totalWidth)) + "px)";  	
-    }
-    else
-    { 
-      slideToUpdate.style.transform = "translateX(" + (lastElemPos) + "px)";  	
-    }  
-  }, 10);
-
+	let slides = document.querySelectorAll('.slide-' + sliderNumber);
+  let lastElemPos = 0;
+  let totalWidth = (slides[0].offsetWidth) * slides.length;
+  let slideToUpdate = rollingSlides[rollingSlides.length-1];  
   
+  if(slideToUpdate != slides[slides.length-1])    	  	
+  	lastElemPos = parseInt(rollingSlides[0].style.transform.split("px")[0].split("(")[1]);
+    
+  rollingSlides.pop();
+  rollingSlides.unshift(slideToUpdate);
+  slideToUpdate.style.visibility = "hidden";
+  
+  if(slideToUpdate == slides[slides.length-1])
+  {      
+    slideToUpdate.style.transform = "translateX(" + (-1*(totalWidth)) + "px)";  	
+  }
+  else
+  { 
+    slideToUpdate.style.transform = "translateX(" + (lastElemPos) + "px)";  	
+  }  
 }
 
 
@@ -187,7 +172,6 @@ function moveSlidesLeft(sliderNumber)
       for(var i = 0; i < slides.length;i++)
       {
         slides[i].style.visibility = "visible";
-        slides[i].style.transition = "transform 0.3s";
         let currPos = parseInt(slides[i].style.transform.split("px")[0].split("(")[1]);      
         slides[i].style.transform = "translateX(" + (currPos+(slides[0].offsetWidth)) + "px)";
       }
@@ -228,11 +212,11 @@ for(var j = 0;j < sliderNumbers.length;j++)
       sliderAnimInProcess[sn] = true;
       updateSliderForLeft(sn);  
       if(sn == 2)      
-        setTimeout(function(){moveSlidesLeft(2);},20);
+        setTimeout(function(){moveSlidesLeft(2);},400);
       else if(sn == 3)      
-        setTimeout(function(){moveSlidesLeft(3);},20);
+        setTimeout(function(){moveSlidesLeft(3);},400);
       else if(sn == 5)      
-        setTimeout(function(){moveSlidesLeft(5);},20);
+        setTimeout(function(){moveSlidesLeft(5);},400);
       
       return false;  
     });
